@@ -10,6 +10,14 @@ int odd(int n){
     }
 }
 
+int multiple3(int n){
+    if(n%3 == 0){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 
 int main(){
     int n;
@@ -18,6 +26,11 @@ int main(){
         printf("\n%d est paire\n", n);
     } else {
         printf("\n%d est impaire\n",n);
+    }
+    if(multiple3(n)){
+        printf("\n%d est un multiple de 3\n", n);
+    } else {
+        printf("\n%d n'est pas un multiple de 3\n", n);
     }
 
     system("pause");
