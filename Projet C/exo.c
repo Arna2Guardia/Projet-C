@@ -14,62 +14,98 @@
 // ex : "| Mon super titre | 4 €/u | 45 | 180 | ~135€ |"
 // plus une ligne de total, affichant la somme des prix susmentionnés
 // ex : "|TOTAL| | | 180 € | ~135€|"
+#define SIZE 100
+#define SIZE2 200
 
-void demande(char* t, int* p, int* q){
-    printf("Le titre\n");
-    scanf(" %[^\n]", t);
-    printf("Le prix\n");
-    scanf("%d", p);
-    printf("La quantité\n");
-    scanf("%d", q);
-}
+typedef enum{
+    VRAI = 1, FAUX = 0
+}Booleen;
 
-void addItemInt(int* tab, int* val, int size){
-    tab[size-1] = *val;
-}
 
-void addItemChar(char** tab, char* val, int size){
-    tab[size-1] = val;
-}
+struct data{
+    char title[SIZE];
+    float price;
+    int quantity;
+};
+
 
 int main(){
+
+    float total = 0.0;
+    float totalTaxed = 0.0;
     int cond = 1;
-    char *tabTitres[10000];
-    int tabPrix[10000];
-    int tabQuant[10000];
-    int size = 0;
-    while(cond == 1){
-        char t[1000];
-        int p;
-        int q;
-        demande(t, &p, &q);
-        addItemInt(tabPrix,&p,size+1);
-        addItemInt(tabQuant,&q,size+1);
-        char s[1000];
-        strcpy(s, t);
-        addItemChar(tabTitres, s, size+1);
-        size++;
-        printf("\n Voulez vous continuer ?1:Oui 2:Non\n");
+    struct data item[SIZE2];
+
+    for(int i =0; i < SIZE2; i++){
+
+        printf("Le titre\n");
+        scanf(" %[^\n]", &item[i].title[0]);
+        printf("Le prix\n");
+        scanf("%f", &item[i].price);
+        printf("La quantite\n");
+        scanf("%d", &item[i].quantity);
+        printf("\nVoulez vous continuer ?(0/1)\n");
         scanf("%d",&cond);
-    }
-    printf("\nLE TABLEAU DES PRIX ICI:\n");   
-    for(int i = 0; i < size; i++) {
-        printf("%d\n",tabPrix[i]);
-    }
-    printf("\nLE TABLEAU DES QUANT ICI:\n");
-    for(int j = 0; j < size; j++) {
-        printf("%d\n",tabQuant[j]);
-    }
-    printf("\nLE TABLEAU DES TITRES ICI:\n");
-    for(int k = 0; k < size; k++) {
-        for(int l = 0; l < 1000; l++){
-            if (tabTitres[k][l] == '\0'){
-                break;
+        if(cond != 1){
+            for(int j =0; j <= i; j++){
+                printf("| %s | %d | %.2f \xE2\x82\xAC |\n", item[j].title, item[j].quantity, item[j].price);
+                total = total + (item[j].quantity) * (item[j].price);
+                
             }
-            printf("%c",tabTitres[k][l]);
+            
+            totalTaxed = totalTaxed + (total * 0.76);
+            printf("| TOTAL | %.2f \xE2\x82\xAC| %.2f \xE2\x82\xAC|\n",total,totalTaxed);
+            break;
         }
-        printf("\n");
+
     }
+
     system("pause");
     return 0;
 }
+
+
+// void demande(char* t, int* p, int* q){
+//     printf("Le titre\n");
+//     scanf(" %[^\n]", t);
+//     printf("Le prix\n");
+//     scanf("%d", p);
+//     printf("La quantite\n");
+//     scanf("%d", q);
+// }
+
+// void addItemInt(int* tab, int* val, int size){
+//     tab[size-1] = *val;
+// }
+
+// void addItemChar(char* tab, char* val, int size){
+//     strcpy(tab, val); // copy the string into the array
+// }
+
+// int main(){
+//     int cond = 1;
+//     char tabTitres[1000][2000];
+//     int tabPrix[1000];
+//     int tabQuant[1000];
+//     int size = 0;
+//     while(cond == 1){
+//         char t[1000];
+//         int p;
+//         int q;
+//         demande(t, &p, &q);
+//         addItemInt(tabPrix,&p,size+1);
+//         addItemInt(tabQuant,&q,size+1);
+//         addItemChar(tabTitres[1000], t, size+1);
+//         size++;
+//         printf("\n Voulez vous continuer ?1:Oui 2:Non\n");
+//         scanf("%d",&cond);
+//     }
+//     printf("\nLe tableau:\n");   
+//     for(int i = 0; i < size; i++) {
+//         printf("%s |%d | %d",tabTitres[i],tabPrix[i],tabQuant[i]);
+//         printf("\n");
+//     }
+
+//     system("pause");
+//     return 0;
+// }
